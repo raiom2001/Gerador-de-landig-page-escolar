@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>{{ meta_title or (nome_escola + ' - Educação de Excelência | Matrículas Abertas') }}</title>
+    <meta name="description" content="{{ meta_description or 'Descubra uma educação de qualidade na ' + nome_escola + '. Metodologia inovadora, professores qualificados e infraestrutura completa. Matrículas abertas!' }}">
+    <meta name="keywords" content="escola, educação, {{ nome_escola.lower() }}, ensino, matrícula, curso, alunos">
+    <meta name="author" content="{{ nome_escola }}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.{{ nome_escola.lower().replace(' ', '') }}.edu.br/">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="{{ meta_title or (nome_escola + ' - Educação de Excelência') }}">
+    <meta property="og:description" content="{{ meta_description or 'Educação de qualidade na ' + nome_escola }}">
+    <meta property="og:image" content="{{ banner_url }}">
+    <meta property="og:url" content="https://www.{{ nome_escola.lower().replace(' ', '') }}.edu.br/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Google Fonts - Preload -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- DaisyUI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+    
+    {% if google_analytics_id %}
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_id }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ google_analytics_id }}');
+    </script>
+    {% endif %}
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif']
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'fade-in-left': 'fadeInLeft 0.8s ease-out',
+                        'fade-in-right': 'fadeInRight 0.8s ease-out',
+                        'scale-in': 'scaleIn 0.5s ease-out',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-glow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'gradient-shift': 'gradientShift 8s ease infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(50px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        fadeInLeft: {
+                            '0%': { opacity: '0', transform: 'translateX(-50px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        },
+                        fadeInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(50px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        },
+                        scaleIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.9)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
+                        },
+                        gradientShift: {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Cores Customizadas Dinâmicas -->
+    <style>
+        {{ custom_css|safe }}
+        
+        body { font-family: 'Montserrat', sans-serif; }
+        
+        /* Animações de Scroll */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Efeitos de hover intensos */
+        .hover-intense {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-intense:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Background animado sutil */
+        .animated-bg {
+            background: linear-gradient(-45deg, 
+                rgba(var(--color-primary), 0.1), 
+                rgba(var(--color-accent), 0.1), 
+                rgba(var(--color-secondary), 0.1), 
+                rgba(var(--color-primary), 0.1));
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        /* Contador animado */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* Glowing effect para CTAs */
+        .glow-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glow-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .glow-effect:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+
+<body class="font-montserrat">
+
+    <!-- Header/Navigation Sticky -->
+    <header class="navbar bg-white/95 backdrop-blur-sm shadow-lg sticky top-0 z-50">
+        <div class="navbar-start">
+            <!-- Mobile Menu -->
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden" aria-label="Menu">
+                    <i class="fas fa-bars text-xl"></i>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg bg-white rounded-box w-52">
+                    {% for botao in botoes_menu %}
+                    <li><a href="#{{ botao.slug }}" class="hover:text-brand-primary">{{ botao.nome }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- Logo -->
+            <div class="flex items-center">
+                <img src="{{ logo_url }}" alt="{{ nome_escola }}" class="h-10 w-auto mr-3 animate-float" loading="eager">
+                <span class="font-bold text-xl text-gray-900 hidden sm:block">{{ nome_escola }}</span>
+            </div>
+        </div>
+        
+        <!-- Desktop Menu -->
+        <nav class="navbar-center hidden lg:flex" role="navigation">
+            <ul class="menu menu-horizontal px-1">
+                {% for botao in botoes_menu %}
+                <li>
+                    <a href="#{{ botao.slug }}" class="font-medium text-gray-700 hover:text-brand-primary transition-colors">
+                        {{ botao.nome }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </nav>
+        
+        <div class="navbar-end">
+            <a href="#contato" class="btn bg-brand-accent hover:bg-brand-accent text-white border-none cta-glow font-bold glow-effect animate-pulse-glow">
+                <i class="fas fa-graduation-cap mr-2"></i>
+                {{ cta_principal }}
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section - Animação Intensa -->
+        <section id="inicio" class="hero min-h-screen gradient-hero relative overflow-hidden">
+            <!-- Background particles (simulado) -->
+            <div class="absolute inset-0 animated-bg"></div>
+            
+            <div class="hero-content text-center text-white max-w-6xl relative z-10">
+                <div class="animate-fade-in-up">
+                    <h1 class="text-4xl md:text-6xl lg:text-8xl font-black mb-8 leading-tight animate-wiggle">
+                        {{ slogan_principal or 'Transformando Futuros Através da Educação' }}
+                    </h1>
+                    {% if sub_slogan %}
+                    <p class="text-xl md:text-3xl mb-10 opacity-90 max-w-4xl mx-auto animate-fade-in-left">
+                        {{ sub_slogan }}
+                    </p>
+                    {% endif %}
+                    
+                    <!-- CTA Principal - Máximo Destaque -->
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
+                        <a href="#contato" class="btn btn-lg bg-brand-accent hover:bg-brand-accent text-white border-none font-black text-2xl px-12 py-6 cta-glow glow-effect animate-bounce-slow transform hover:scale-110 transition-all duration-300">
+                            <i class="fas fa-rocket mr-3 text-3xl"></i>
+                            {{ cta_principal }}
+                        </a>
+                        <a href="#segmentos" class="btn btn-lg btn-outline text-white border-white hover:bg-white hover:text-brand-primary font-bold text-xl px-8">
+                            <i class="fas fa-play mr-3"></i>
+                            Ver Segmentos
+                        </a>
+                    </div>
+                    
+                    <!-- Trust Indicators Animados -->
+                    <div class="flex flex-wrap justify-center items-center gap-8 text-lg animate-fade-in-right">
+                        {% for metrica in metricas_sucesso %}
+                        <div class="flex items-center gap-3 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full">
+                            <i class="{{ metrica.icone }} text-2xl"></i>
+                            <span class="font-bold counter" data-target="{{ metrica.valor }}">{{ metrica.valor }}</span>
+                            <span class="text-sm opacity-80">{{ metrica.label }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Credibilidade e Prova Social -->
+        <section class="py-20 bg-white scroll-fade">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6 animate-fade-in-up">
+                        Por que a {{ nome_escola }} é Diferente?
+                    </h2>
+                    <p class="text-2xl text-gray-600 max-w-4xl mx-auto">
+                        Números que comprovam nossa excelência educacional
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    {% for metrica in metricas_sucesso %}
+                    <div class="text-center hover-intense scroll-fade" style="animation-delay: {{ loop.index * 0.1 }}s">
+                        <div class="w-20 h-20 bg-brand-accent/20 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse-glow">
+                            <i class="{{ metrica.icone }} text-3xl text-brand-accent"></i>
+                        </div>
+                        <div class="text-4xl md:text-5xl font-black text-brand-primary mb-3 counter" data-target="{{ metrica.valor }}">{{ metrica.valor }}</div>
+                        <div class="text-gray-600 font-semibold text-lg">{{ metrica.label }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Segmentos da Escola - FOCO PRINCIPAL -->
+        <section id="segmentos" class="py-24 gradient-animated">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-20 scroll-fade">
+                    <h2 class="text-5xl md:text-6xl font-black text-white mb-8">
+                        Encontre o Futuro Certo para Seu Filho
+                    </h2>
+                    <p class="text-2xl text-white/90 max-w-4xl mx-auto">
+                        Cada fase da vida escolar é única. Descubra qual segmento melhor se adequa ao seu filho.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ segmentos|length if segmentos|length <= 3 else 3 }} gap-8">
+                    {% for segmento in segmentos %}
+                    <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 hover-intense scroll-fade border-t-8 border-brand-accent" style="animation-delay: {{ loop.index * 0.15 }}s">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 bg-brand-primary rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce-slow">
+                                <i class="{{ segmento.icone }} text-3xl text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-black text-gray-900 mb-4">{{ segmento.nome }}</h3>
+                            <p class="text-gray-600 text-lg leading-relaxed mb-6">{{ segmento.descricao }}</p>
+                        </div>
+                        
+                        <a href="#contato" class="btn bg-brand-accent hover:bg-brand-accent text-white border-none font-bold text-lg w-full py-4 glow-effect transform hover:scale-105 transition-all duration-300">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            {{ segmento.cta_texto }}
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefícios/Mapa Mental -->
+        <section id="beneficios" class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-20 scroll-fade">
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6">
+                        Diferenciais que Transformam Vidas
+                    </h2>
+                    <p class="text-2xl text-gray-600 max-w-4xl mx-auto">
+                        Descubra por que milhares de famílias escolhem a {{ nome_escola }}
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ beneficios|length if beneficios|length <= 4 else 4 }} gap-8">
+                    {% for beneficio in beneficios %}
+                    <div class="bg-gradient-to-br from-brand-primary/10 to-brand-secondary/10 rounded-2xl shadow-xl p-8 hover-intense scroll-fade border-l-4 border-brand-accent" style="animation-delay: {{ loop.index * 0.1 }}s">
+                        <div class="w-16 h-16 bg-brand-accent rounded-full flex items-center justify-center mb-6 animate-pulse">
+                            <i class="{{ beneficio.icone }} text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-gray-900 mb-4">{{ beneficio.titulo }}</h3>
+                        <p class="text-gray-600 leading-relaxed">{{ beneficio.descricao }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Sobre a Escola -->
+        <section id="sobre" class="py-24 bg-gradient-to-r from-brand-primary/5 to-brand-secondary/5">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div class="scroll-fade">
+                        <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-8">
+                            Conheça a {{ nome_escola }}
+                        </h2>
+                        <p class="text-xl text-gray-700 mb-8 leading-relaxed">
+                            Há mais de 30 anos, a {{ nome_escola }} se dedica a formar cidadãos preparados para os desafios do futuro. Nossa instituição combina tradição educacional com inovação pedagógica, oferecendo um ambiente de aprendizagem estimulante e acolhedor.
+                        </p>
+                        <p class="text-xl text-gray-700 mb-10 leading-relaxed">
+                            Acreditamos que cada aluno é único e possui potencial ilimitado. Por isso, nossa metodologia personalizada valoriza as individualidades e promove o desenvolvimento integral de cada estudante.
+                        </p>
+                        <a href="#contato" class="btn bg-brand-accent hover:bg-brand-accent text-white border-none font-bold text-xl px-8 py-4 glow-effect">
+                            <i class="fas fa-calendar-check mr-3"></i>
+                            Agende uma Visita Agora
+                        </a>
+                    </div>
+                    
+                    <div class="order-first lg:order-last scroll-fade">
+                        {% if video_institucional_url %}
+                        <div class="aspect-video bg-gray-200 rounded-2xl shadow-2xl overflow-hidden hover-intense">
+                            <iframe 
+                                src="{{ video_institucional_url.replace('watch?v=', 'embed/') }}" 
+                                class="w-full h-full" 
+                                frameborder="0" 
+                                allowfullscreen
+                                loading="lazy"
+                                title="Vídeo institucional {{ nome_escola }}"
+                            ></iframe>
+                        </div>
+                        {% else %}
+                        <div class="aspect-video gradient-hero rounded-2xl shadow-2xl flex items-center justify-center text-white hover-intense">
+                            <div class="text-center">
+                                <i class="fas fa-play-circle text-8xl mb-6 opacity-80 animate-pulse"></i>
+                                <p class="text-3xl font-bold">Vídeo Institucional</p>
+                                <p class="text-xl opacity-80">Em breve</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA de Fechamento - Máximo Impacto -->
+        <section class="py-24 gradient-animated relative overflow-hidden">
+            <!-- Elementos decorativos -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute top-10 left-10 w-20 h-20 bg-white rounded-full animate-bounce"></div>
+                <div class="absolute top-20 right-20 w-16 h-16 bg-white rounded-full animate-pulse"></div>
+                <div class="absolute bottom-10 left-20 w-12 h-12 bg-white rounded-full animate-ping"></div>
+            </div>
+            
+            <div class="max-w-5xl mx-auto px-6 text-center relative z-10 scroll-fade">
+                <h2 class="text-5xl md:text-7xl font-black text-white mb-8">
+                    Ainda tem Dúvidas?
+                </h2>
+                <p class="text-2xl md:text-3xl text-white/90 mb-12 max-w-4xl mx-auto">
+                    Agende uma visita e conheça pessoalmente nossa estrutura, metodologia e equipe pedagógica. 
+                    Venha descobrir por que somos a melhor escolha para o futuro do seu filho.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
+                    <a href="#contato" class="btn btn-lg bg-white text-brand-primary hover:bg-gray-100 border-none font-black text-2xl px-12 py-6 cta-glow glow-effect animate-bounce-slow transform hover:scale-110 transition-all duration-300">
+                        <i class="fas fa-phone mr-3"></i>
+                        Fale Conosco Agora
+                    </a>
+                    {% if whatsapp %}
+                    <a href="https://wa.me/55{{ whatsapp }}?text=Olá! Gostaria de saber mais sobre a {{ nome_escola }}" target="_blank" class="btn btn-lg btn-outline text-white border-white hover:bg-white hover:text-brand-primary font-bold text-xl px-8">
+                        <i class="fab fa-whatsapp mr-3 text-2xl"></i>
+                        WhatsApp Direto
+                    </a>
+                    {% endif %}
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-white/80">
+                    <div class="text-center">
+                        <i class="fas fa-clock text-3xl mb-2"></i>
+                        <p class="font-bold">Resposta</p>
+                        <p class="text-sm">Em 24h</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-calendar text-3xl mb-2"></i>
+                        <p class="font-bold">Visita</p>
+                        <p class="text-sm">Agendada</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-gift text-3xl mb-2"></i>
+                        <p class="font-bold">Matrícula</p>
+                        <p class="text-sm">Sem Taxa</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-heart text-3xl mb-2"></i>
+                        <p class="font-bold">Atendimento</p>
+                        <p class="text-sm">Personalizado</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contato -->
+        <section id="contato" class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-20 scroll-fade">
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6">
+                        Vamos Conversar?
+                    </h2>
+                    <p class="text-2xl text-gray-600">
+                        Estamos prontos para esclarecer suas dúvidas e receber sua família
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <!-- Informações de Contato -->
+                    <div class="space-y-8 scroll-fade">
+                        <h3 class="text-3xl font-bold text-gray-900 mb-8">Informações</h3>
+                        
+                        <div class="flex items-start space-x-6 hover-intense">
+                            <div class="w-16 h-16 bg-brand-accent rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl text-gray-900 mb-2">Endereço</h4>
+                                <p class="text-gray-600 text-lg">{{ endereco or 'Rua Exemplo, 123 - Bairro - Cidade/UF' }}</p>
+                            </div>
+                        </div>
+                        
+                        {% if telefone %}
+                        <div class="flex items-start space-x-6 hover-intense">
+                            <div class="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-phone text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl text-gray-900 mb-2">Telefone</h4>
+                                <p class="text-gray-600 text-lg">{{ telefone }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if email %}
+                        <div class="flex items-start space-x-6 hover-intense">
+                            <div class="w-16 h-16 bg-brand-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-envelope text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl text-gray-900 mb-2">E-mail</h4>
+                                <p class="text-gray-600 text-lg">{{ email }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="flex items-start space-x-6 hover-intense">
+                            <div class="w-16 h-16 bg-brand-accent/80 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-clock text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xl text-gray-900 mb-2">Horário de Atendimento</h4>
+                                <p class="text-gray-600 text-lg">Segunda à Sexta: 08:00 - 18:00<br>Sábado: 08:00 - 12:00</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Formulário de Contato -->
+                    <div class="bg-gradient-to-br from-brand-primary/5 to-brand-secondary/5 rounded-3xl p-8 shadow-2xl scroll-fade">
+                        <h3 class="text-3xl font-bold text-gray-900 mb-8">Solicite Informações</h3>
+                        <form class="space-y-6" action="#" method="post">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Nome *</label>
+                                    <input type="text" required class="input input-bordered w-full text-lg p-4 focus:border-brand-accent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">Telefone *</label>
+                                    <input type="tel" required class="input input-bordered w-full text-lg p-4 focus:border-brand-accent">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">E-mail *</label>
+                                <input type="email" required class="input input-bordered w-full text-lg p-4 focus:border-brand-accent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Segmento de Interesse</label>
+                                <select class="select select-bordered w-full text-lg p-4 focus:border-brand-accent">
+                                    <option>Selecione um segmento...</option>
+                                    {% for segmento in segmentos %}
+                                    <option>{{ segmento.nome }}</option>
+                                    {% endfor %}
+                                    <option>Informações Gerais</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Mensagem</label>
+                                <textarea class="textarea textarea-bordered w-full h-32 text-lg p-4 focus:border-brand-accent" placeholder="Como podemos ajudar?"></textarea>
+                            </div>
+                            <button type="submit" class="btn bg-brand-accent hover:bg-brand-accent text-white border-none w-full font-bold text-xl py-4 glow-effect transform hover:scale-105 transition-all duration-300">
+                                <i class="fas fa-paper-plane mr-3"></i>
+                                Enviar Mensagem
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Logo e Descrição -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center mb-6">
+                        <img src="{{ logo_url }}" alt="{{ nome_escola }}" class="h-12 w-auto mr-4 filter brightness-0 invert">
+                        <span class="font-bold text-2xl">{{ nome_escola }}</span>
+                    </div>
+                    <p class="text-gray-300 mb-8 max-w-md text-lg leading-relaxed">
+                        Educação de qualidade, formando cidadãos preparados para o futuro através de metodologias inovadoras e ambiente acolhedor.
+                    </p>
+                </div>
+                
+                <!-- Links Rápidos -->
+                <div>
+                    <h4 class="font-bold text-xl mb-6">Links Rápidos</h4>
+                    <ul class="space-y-3">
+                        {% for botao in botoes_menu %}
+                        <li>
+                            <a href="#{{ botao.slug }}" class="text-gray-300 hover:text-brand-accent transition-colors text-lg">
+                                {{ botao.nome }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <!-- Redes Sociais -->
+                <div>
+                    <h4 class="font-bold text-xl mb-6">Redes Sociais</h4>
+                    <div class="flex space-x-4">
+                        {% for rede in redes_sociais %}
+                        <a href="{{ rede.link }}" target="_blank" class="text-3xl text-gray-300 hover:text-brand-accent transition-colors transform hover:scale-110" aria-label="{{ rede.nome }}">
+                            <i class="{{ rede.icone }}"></i>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-300 text-lg">
+                    &copy; {{ timestamp[:4] if timestamp else "2024" }} {{ nome_escola }}. Todos os direitos reservados.
+                </p>
+                <p class="text-gray-500 mt-2">
+                    Desenvolvido com High-Convert Edu-Page Generator - Dinâmico
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button Animado -->
+    {% if whatsapp %}
+    <a href="https://wa.me/55{{ whatsapp }}?text=Olá! Gostaria de saber mais sobre a {{ nome_escola }}" 
+       target="_blank" 
+       class="fixed bottom-8 right-8 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-2xl z-50 animate-bounce-slow transform hover:scale-110 transition-all duration-300"
+       aria-label="WhatsApp">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+    {% endif %}
+
+    <!-- Scripts de Animação -->
+    <script>
+        // Animações de scroll reveal
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observar todos os elementos com scroll-fade
+        document.querySelectorAll('.scroll-fade').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling para navegação
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Contador animado para métricas
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter[data-target]');
+            counters.forEach(counter => {
+                const target = counter.getAttribute('data-target');
+                const isNumeric = /^\d+$/.test(target);
+                
+                if (isNumeric) {
+                    const increment = target / 100;
+                    let current = 0;
+                    
+                    const updateCounter = () => {
+                        if (current < target) {
+                            current += increment;
+                            counter.textContent = Math.floor(current);
+                            setTimeout(updateCounter, 20);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    };
+                    
+                    updateCounter();
+                }
+            });
+        }
+
+        // Ativar contadores quando a seção estiver visível
+        const metricsSection = document.querySelector('.py-20');
+        if (metricsSection) {
+            const metricsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(animateCounters, 500);
+                        metricsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            metricsObserver.observe(metricsSection);
+        }
+
+        // Menu ativo baseado no scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop <= 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('text-brand-primary');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-brand-primary');
+                }
+            });
+        });
+
+        // Log de conversão para analytics
+        function trackConversion(action, value) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'conversion', {
+                    'action': action,
+                    'value': value
+                });
+            }
+            console.log('Conversão:', action, value);
+        }
+
+        // Rastrear cliques nos CTAs
+        document.querySelectorAll('a[href="#contato"], a[href*="whatsapp"]').forEach(cta => {
+            cta.addEventListener('click', () => {
+                trackConversion('cta_click', cta.textContent.trim());
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High-Convert Edu-Page Generator - Dinâmico</title>
+    <meta name="description" content="Gerador de landing pages educacionais com cores customizáveis e animações dinâmicas.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- DaisyUI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.19/dist/full.min.css" rel="stylesheet" type="text/css" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif']
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-glow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'gradient-shift': 'gradient-shift 8s ease infinite',
+                    },
+                    keyframes: {
+                        'gradient-shift': {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { font-family: 'Montserrat', sans-serif; }
+        
+        .color-preview {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        
+        .color-preview:hover {
+            transform: scale(1.1);
+            border-color: #6b7280;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-montserrat">
+    
+    <!-- Header Dinâmico -->
+    <header class="gradient-bg text-white shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 animate-float">
+                    <i class="fas fa-palette text-yellow-300 mr-3"></i>
+                    High-Convert Edu-Page
+                </h1>
+                <p class="text-xl opacity-90 mb-6">Gerador Dinâmico com Cores Customizáveis</p>
+                <div class="flex flex-wrap items-center justify-center gap-4 text-sm">
+                    <span class="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
+                        <i class="fas fa-paint-brush"></i>
+                        Cores Personalizadas
+                    </span>
+                    <span class="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
+                        <i class="fas fa-magic"></i>
+                        Animações Dinâmicas
+                    </span>
+                    <span class="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
+                        <i class="fas fa-rocket"></i>
+                        Alta Conversão
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 py-8">
+        <form method="POST" enctype="multipart/form-data" class="space-y-8">
+            
+            <!-- Personalização de Cores -->
+            <section class="bg-white rounded-2xl shadow-xl border p-8 transform hover:scale-[1.02] transition-all duration-300">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-3">
+                        <i class="fas fa-palette text-purple-600 mr-3"></i>
+                        Personalize as Cores da sua Escola
+                    </h2>
+                    <p class="text-gray-600 text-lg">
+                        Escolha 3 cores que representem a identidade visual da sua instituição
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <label class="block text-lg font-bold text-gray-800 mb-4">
+                            🎨 Cor Primária
+                        </label>
+                        <input 
+                            type="color" 
+                            name="primary_color" 
+                            value="#3B82F6"
+                            class="color-preview mx-auto mb-4 cursor-pointer"
+                            onchange="updatePreview('primary', this.value)"
+                        >
+                        <p class="text-sm text-gray-600 mb-2">Para backgrounds e textos principais</p>
+                        <div class="w-full h-12 bg-blue-500 rounded-lg" id="primary-preview"></div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <label class="block text-lg font-bold text-gray-800 mb-4">
+                            ✨ Cor de Destaque (CTAs)
+                        </label>
+                        <input 
+                            type="color" 
+                            name="accent_color" 
+                            value="#06FFA5"
+                            class="color-preview mx-auto mb-4 cursor-pointer"
+                            onchange="updatePreview('accent', this.value)"
+                        >
+                        <p class="text-sm text-gray-600 mb-2">Exclusiva para botões de conversão</p>
+                        <div class="w-full h-12 bg-green-400 rounded-lg animate-pulse" id="accent-preview"></div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <label class="block text-lg font-bold text-gray-800 mb-4">
+                            🌟 Cor Secundária
+                        </label>
+                        <input 
+                            type="color" 
+                            name="secondary_color" 
+                            value="#8B5CF6"
+                            class="color-preview mx-auto mb-4 cursor-pointer"
+                            onchange="updatePreview('secondary', this.value)"
+                        >
+                        <p class="text-sm text-gray-600 mb-2">Para hovers e elementos secundários</p>
+                        <div class="w-full h-12 bg-purple-500 rounded-lg" id="secondary-preview"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEO e Analytics -->
+            <section class="bg-white rounded-2xl shadow-xl border p-8">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                        <i class="fas fa-search text-blue-600"></i>
+                        SEO e Analytics
+                    </h2>
+                    <p class="text-gray-600">Configure elementos essenciais para visibilidade</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="lg:col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            Meta Título (SEO) *
+                        </label>
+                        <input 
+                            type="text" 
+                            name="meta_title" 
+                            maxlength="60"
+                            class="input input-bordered w-full focus:border-purple-500" 
+                            placeholder="Ex: Colégio Exemplo - Educação de Qualidade | Matrícula 2025"
+                            required
+                        >
+                        <div class="text-xs text-gray-500 mt-1">Máximo 60 caracteres</div>
+                    </div>
+                    
+                    <div class="lg:col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            Meta Descrição (SEO) *
+                        </label>
+                        <textarea 
+                            name="meta_description" 
+                            maxlength="160"
+                            rows="3"
+                            class="textarea textarea-bordered w-full focus:border-purple-500" 
+                            placeholder="Descrição atrativa da escola para o Google (máximo 160 caracteres)"
+                            required
+                        ></textarea>
+                        <div class="text-xs text-gray-500 mt-1">Máximo 160 caracteres</div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            Google Analytics ID (Opcional)
+                        </label>
+                        <input 
+                            type="text" 
+                            name="google_analytics_id" 
+                            class="input input-bordered w-full" 
+                            placeholder="G-XXXXXXXXXX"
+                        >
+                    </div>
+                </div>
+            </section>
+
+            <!-- Informações da Escola -->
+            <section class="bg-white rounded-2xl shadow-xl border p-8">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                        <i class="fas fa-school text-blue-600"></i>
+                        Informações da Escola
+                    </h2>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            Nome da Escola *
+                        </label>
+                        <input 
+                            type="text" 
+                            name="nome_escola" 
+                            class="input input-bordered w-full" 
+                            placeholder="Ex: Colégio Excelência"
+                            required
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            Logo da Escola
+                        </label>
+                        <input 
+                            type="file" 
+                            name="logo" 
+                            accept="image/*"
+                            class="file-input file-input-bordered w-full"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            Endereço Completo
+                        </label>
+                        <input 
+                            type="text" 
+                            name="endereco" 
+                            class="input input-bordered w-full" 
+                            placeholder="Rua Exemplo, 123 - Bairro - Cidade/UF"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            WhatsApp (com DDD)
+                        </label>
+                        <input 
+                            type="tel" 
+                            name="whatsapp" 
+                            class="input input-bordered w-full" 
+                            placeholder="11987654321"
+                        >
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hero Section -->
+            <section class="bg-white rounded-2xl shadow-xl border p-8">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                        <i class="fas fa-bullhorn text-yellow-500"></i>
+                        Seção Principal (Hero)
+                    </h2>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            Slogan Principal (H1) *
+                        </label>
+                        <input 
+                            type="text" 
+                            name="slogan_principal" 
+                            class="input input-bordered w-full text-lg" 
+                            placeholder="Ex: Transformando Futuros Através da Educação"
+                            required
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            Sub-slogan (Descrição)
+                        </label>
+                        <textarea 
+                            name="sub_slogan" 
+                            rows="2"
+                            class="textarea textarea-bordered w-full" 
+                            placeholder="Uma breve descrição dos diferenciais da escola..."
+                        ></textarea>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">
+                                Texto do CTA Principal *
+                            </label>
+                            <input 
+                                type="text" 
+                                name="cta_principal" 
+                                class="input input-bordered w-full" 
+                                value="Matricule-se Agora"
+                                required
+                            >
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">
+                                Banner Principal
+                            </label>
+                            <input 
+                                type="file" 
+                                name="banner_principal" 
+                                accept="image/*"
+                                class="file-input file-input-bordered w-full"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Segmentos da Escola (NOVO FOCO) -->
+            <section class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl shadow-xl p-8 text-white">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold mb-3">
+                        <i class="fas fa-graduation-cap mr-3"></i>
+                        Segmentos da Escola
+                    </h2>
+                    <p class="text-xl opacity-90">
+                        Configure os níveis de ensino que sua escola oferece
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {% for i in range(1, 6) %}
+                    <div class="bg-white/20 backdrop-blur-sm rounded-xl p-6 hover:bg-white/30 transition-all duration-300">
+                        <h3 class="font-bold text-lg mb-4 flex items-center">
+                            <span class="bg-white/30 w-8 h-8 rounded-full flex items-center justify-center mr-3">
+                                {{ i }}
+                            </span>
+                            Segmento {{ i }}{% if i == 1 %} *{% endif %}
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <input 
+                                type="text" 
+                                name="segmento_nome_{{ i }}" 
+                                class="input input-bordered w-full text-gray-800" 
+                                placeholder="{% if i == 1 %}Educação Infantil{% elif i == 2 %}Fundamental I{% elif i == 3 %}Fundamental II{% elif i == 4 %}Ensino Médio{% else %}Pré-vestibular{% endif %}"
+                                {% if i == 1 %}required{% endif %}
+                            >
+                            
+                            <textarea 
+                                name="segmento_descricao_{{ i }}" 
+                                class="textarea textarea-bordered w-full text-gray-800" 
+                                rows="2"
+                                placeholder="Descrição do segmento e seus diferenciais..."
+                                {% if i == 1 %}required{% endif %}
+                            ></textarea>
+                            
+                            <input 
+                                type="text" 
+                                name="segmento_cta_{{ i }}" 
+                                class="input input-bordered w-full text-gray-800" 
+                                placeholder="Inscreva-se no {% if i == 1 %}Infantil{% elif i == 2 %}Fundamental I{% elif i == 3 %}Fundamental II{% elif i == 4 %}Ensino Médio{% else %}Pré-vestibular{% endif %}"
+                            >
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Menu de Navegação -->
+            <section class="bg-white rounded-2xl shadow-xl border p-8">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                        <i class="fas fa-bars text-gray-600"></i>
+                        Menu de Navegação
+                    </h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {% for i in range(1, 6) %}
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Item {{ i }}{% if i <= 4 %} *{% endif %}
+                        </label>
+                        <input 
+                            type="text" 
+                            name="botao_menu_{{ i }}" 
+                            class="input input-bordered w-full" 
+                            placeholder="{% if i == 1 %}Início{% elif i == 2 %}Sobre{% elif i == 3 %}Segmentos{% elif i == 4 %}Contato{% else %}Opcional{% endif %}"
+                            {% if i <= 4 %}required{% endif %}
+                        >
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Benefícios -->
+            <section class="bg-white rounded-2xl shadow-xl border p-8">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                        <i class="fas fa-star text-yellow-500"></i>
+                        Benefícios da Escola
+                    </h2>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {% for i in range(1, 5) %}
+                    <div class="p-6 bg-gray-50 rounded-xl border-l-4 border-purple-500">
+                        <h3 class="font-bold text-gray-700 mb-3">Benefício {{ i }}</h3>
+                        <div class="space-y-3">
+                            <input 
+                                type="text" 
+                                name="beneficio_titulo_{{ i }}" 
+                                class="input input-bordered input-sm w-full" 
+                                placeholder="Ex: Preparação para o Futuro"
+                            >
+                            <textarea 
+                                name="beneficio_descricao_{{ i }}" 
+                                class="textarea textarea-bordered textarea-sm w-full" 
+                                rows="2"
+                                placeholder="Como este benefício impacta a vida do aluno..."
+                            ></textarea>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Métricas de Sucesso -->
+            <section class="bg-white rounded-2xl shadow-xl border p-8">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                        <i class="fas fa-chart-line text-green-600"></i>
+                        Métricas de Sucesso
+                    </h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Anos no Mercado
+                        </label>
+                        <input 
+                            type="number" 
+                            name="metrica_anos_mercado" 
+                            class="input input-bordered w-full" 
+                            placeholder="30"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Alunos Formados
+                        </label>
+                        <input 
+                            type="text" 
+                            name="metrica_alunos_formados" 
+                            class="input input-bordered w-full" 
+                            placeholder="5.000+"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Taxa de Aprovação
+                        </label>
+                        <input 
+                            type="text" 
+                            name="metrica_taxa_aprovacao" 
+                            class="input input-bordered w-full" 
+                            placeholder="95%"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Professores
+                        </label>
+                        <input 
+                            type="number" 
+                            name="metrica_professores" 
+                            class="input input-bordered w-full" 
+                            placeholder="50"
+                        >
+                    </div>
+                </div>
+            </section>
+
+            <!-- Redes Sociais -->
+            <section class="bg-white rounded-2xl shadow-xl border p-8">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                        <i class="fas fa-share-alt text-purple-600"></i>
+                        Redes Sociais
+                    </h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                            <i class="fab fa-instagram text-pink-500"></i>
+                            Instagram
+                        </label>
+                        <input 
+                            type="url" 
+                            name="rede_instagram" 
+                            class="input input-bordered w-full" 
+                            placeholder="https://instagram.com/suaescola"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                            <i class="fab fa-facebook-f text-blue-600"></i>
+                            Facebook
+                        </label>
+                        <input 
+                            type="url" 
+                            name="rede_facebook" 
+                            class="input input-bordered w-full" 
+                            placeholder="https://facebook.com/suaescola"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                            <i class="fab fa-youtube text-red-600"></i>
+                            YouTube
+                        </label>
+                        <input 
+                            type="url" 
+                            name="rede_youtube" 
+                            class="input input-bordered w-full" 
+                            placeholder="https://youtube.com/suaescola"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                            <i class="fab fa-tiktok text-gray-800"></i>
+                            TikTok
+                        </label>
+                        <input 
+                            type="url" 
+                            name="rede_tiktok" 
+                            class="input input-bordered w-full" 
+                            placeholder="https://tiktok.com/@suaescola"
+                        >
+                    </div>
+                </div>
+            </section>
+
+            <!-- Botão de Geração Final -->
+            <section class="gradient-bg rounded-2xl p-8 text-white text-center">
+                <div class="max-w-2xl mx-auto">
+                    <h2 class="text-3xl font-bold mb-4">
+                        <i class="fas fa-rocket mr-3"></i>
+                        Pronto para Criar Magia?
+                    </h2>
+                    <p class="text-xl mb-8 opacity-90">
+                        Sua landing page será gerada com as cores escolhidas, animações dinâmicas e foco total em conversão de matrículas.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
+                        <button 
+                            type="submit" 
+                            class="btn btn-lg bg-white text-purple-700 hover:bg-gray-100 border-none shadow-xl font-bold px-12 py-4 text-xl animate-bounce-slow transform hover:scale-105 transition-all duration-300"
+                        >
+                            <i class="fas fa-magic mr-3"></i>
+                            GERAR LANDING PAGE DINÂMICA
+                        </button>
+                    </div>
+                    
+                    <div class="flex flex-wrap justify-center gap-4 text-sm opacity-80">
+                        <span>✨ Cores Customizadas</span>
+                        <span>🎬 Animações Imersivas</span>
+                        <span>📱 Totalmente Responsivo</span>
+                        <span>🚀 Otimizado para Conversão</span>
+                    </div>
+                </div>
+            </section>
+
+        </form>
+    </main>
+
+    <script>
+        function updatePreview(type, color) {
+            const preview = document.getElementById(type + '-preview');
+            if (preview) {
+                preview.style.backgroundColor = color;
+            }
+        }
+        
+        // Animações nos inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                    this.parentElement.style.transition = 'transform 0.2s ease';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
